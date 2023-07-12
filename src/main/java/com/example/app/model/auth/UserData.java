@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import lombok.Builder;
@@ -26,23 +26,23 @@ public class UserData {
   private String username;
 
   @JsonProperty("mail")
-  @NotEmpty
+  @NotBlank
   @Email
   private String mail;
 
-  @NotEmpty
   @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
   @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
+  @NotBlank
   @ToString.Exclude
   private String password;
 
   @JsonProperty("firstName")
-  @NotEmpty
+  @NotBlank
   @Size(min = 2, message = "First name should have at least 2 characters")
   private String firstName;
 
   @JsonProperty("lastName")
-  @NotEmpty
+  @NotBlank
   @Size(min = 2, message = "Last name should have at least 2 characters")
   private String lastName;
 
@@ -54,10 +54,10 @@ public class UserData {
 
   @Builder
   public UserData(String id, String username,
-      @NotEmpty @Email String mail,
-      @NotEmpty String password,
-      @NotEmpty @Size(min = 2, message = "First name should have at least 2 characters") String firstName,
-      @NotEmpty @Size(min = 2, message = "Last name should have at least 2 characters") String lastName,
+      @NotBlank @Email String mail,
+      @NotBlank String password,
+      @NotBlank String firstName,
+      @NotBlank String lastName,
       String middleName, LocalDate birthday) {
     this.id = id;
     this.username = username;

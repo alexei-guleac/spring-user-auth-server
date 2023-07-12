@@ -18,7 +18,6 @@ import static com.example.app.constants.ApiDescriptionConstants.UNAVAILABLE;
 import static com.example.app.constants.ApiDescriptionConstants.UNPROCESSABLE_ENTITY;
 
 import com.example.app.model.User;
-import com.example.app.model.auth.TokenInfo;
 import com.example.app.model.auth.UserData;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
@@ -44,7 +43,7 @@ public interface UserApi {
   @ApiOperation(value = "Get user by id",
       nickname = "user", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
       @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
       @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),
@@ -60,7 +59,7 @@ public interface UserApi {
   @ApiOperation(value = "Get users list by id",
       nickname = "getUsersListByIds", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
       @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
       @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),
@@ -75,7 +74,7 @@ public interface UserApi {
   @ApiOperation(value = "Get all users list",
       nickname = "findAllUsers", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
       @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
       @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),
@@ -90,7 +89,7 @@ public interface UserApi {
   @ApiOperation(value = "Search users by email",
       nickname = "searchByEmail", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
       @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
       @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),
@@ -106,7 +105,7 @@ public interface UserApi {
   @ApiOperation(value = "Get user by email",
       nickname = "getByEmail", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
       @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
       @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),

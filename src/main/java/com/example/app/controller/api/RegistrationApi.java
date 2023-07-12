@@ -18,6 +18,7 @@ import static com.example.app.constants.ApiDescriptionConstants.UNAVAILABLE;
 import static com.example.app.constants.ApiDescriptionConstants.UNPROCESSABLE_ENTITY;
 
 import com.example.app.model.auth.TokenInfo;
+import com.example.app.model.auth.UpdatePasswordData;
 import com.example.app.model.auth.UserData;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
@@ -49,4 +50,19 @@ public interface RegistrationApi {
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   TokenInfo registerUser(@Valid @RequestBody UserData signUpData);
+
+  @ApiOperation(value = "Update password",
+      nickname = "updatePassword", tags = {})
+  @ApiResponses(value = {
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UpdatePasswordData.class),
+      @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
+      @ApiResponse(code = UNAUTHORIZED, message = API_RESPONSE_UNAUTHORIZED),
+      @ApiResponse(code = FORBIDDEN, message = API_RESPONSE_FORBIDDEN),
+      @ApiResponse(code = NOT_FOUND, message = API_RESPONSE_NOT_FOUND),
+      @ApiResponse(code = UNPROCESSABLE_ENTITY, message = API_RESPONSE_UNPROCESSABLE_ENTITY),
+      @ApiResponse(code = INTERNAL_SERVER_ERROR, message = API_RESPONSE_INTERNAL_SERVER_ERROR),
+      @ApiResponse(code = UNAVAILABLE, message = API_RESPONSE_UNAVAILABLE)})
+  @PostMapping("/updatePassword")
+  @ResponseStatus(HttpStatus.OK)
+  void updatePassword(@Valid @RequestBody UpdatePasswordData updatePasswordData);
 }

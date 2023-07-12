@@ -8,7 +8,6 @@ import com.example.app.model.Role;
 import com.example.app.model.User;
 import com.example.app.repository.RoleRepository;
 import com.example.app.repository.UserRepository;
-import com.example.app.repository.UserRoleRepository;
 import jakarta.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -17,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,18 +28,16 @@ public class UserDataLoader {
 
   private final RoleRepository roleRepository;
 
-  private final UserRoleRepository userRoleRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @PostConstruct
   public void addAdminUser() {
     if (isEmpty(userRepository.findAll())) {
 
       final Role roleAdmin = roleRepository.saveAndFlush(Role.builder()
-          .roleName(ADMIN.name())
-          .build());
+          .roleName(ADMIN.name()).build());
       final Role roleUser = roleRepository.saveAndFlush(Role.builder()
-          .roleName(USER.name())
-          .build());
+          .roleName(USER.name()).build());
 
       Set<Role> roles = new HashSet<>();
       roles.add(roleAdmin);
@@ -47,7 +45,7 @@ public class UserDataLoader {
 
       userRepository.save(User.builder()
           .mail("admin@example.com")
-          .password("$2a$12$4m1aIANFu9s1HgVoFaLzruF8J/XybGxo9Vs/pgysC9WQL4aFqTKaG")
+          .password(passwordEncoder.encode("admin@example.com"))
           .firstName("Admin")
           .lastName("Admin")
           .middleName("Admin")

@@ -17,4 +17,5 @@ public interface UserRepository extends JpaRepository<User, UUID>,
   Page<User> findByMailContaining(String email, Pageable pageable);
 
   boolean existsByMail(String email);
+
 }
