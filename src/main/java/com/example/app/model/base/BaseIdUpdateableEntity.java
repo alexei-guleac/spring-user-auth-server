@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Getter
@@ -21,19 +22,28 @@ import org.hibernate.annotations.CreationTimestamp;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseIdEntity implements Serializable {
+public class BaseIdUpdateableEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  protected Long id;
+  private Long id;
 
   @Column(name = "create_user_name", nullable = false)
-  protected String createUserName;
+  private String createUserName;
+
+  @Column(name = "update_user_name")
+  private String updateUserName;
 
   @Column(name = "create_datetime", nullable = false)
   @CreationTimestamp
-  protected Timestamp createDateTime;
+  private Timestamp createDateTime;
 
+  @Column(name = "update_datetime")
+  @UpdateTimestamp
+  private Timestamp updateDateTime;
+
+  @Column(name = "deleted", nullable = false)
+  private boolean deleted;
 
 }

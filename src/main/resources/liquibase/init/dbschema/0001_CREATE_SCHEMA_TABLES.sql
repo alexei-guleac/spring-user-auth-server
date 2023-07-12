@@ -22,6 +22,25 @@ create TABLE user_details
     CONSTRAINT        user_details_pkey PRIMARY KEY (id)
 );
 
+create TABLE password_history
+(
+    id                bigint                      NOT NULL,
+    user_id           uuid                        NOT NULL,
+    password          character varying(255)      NOT NULL,
+    create_datetime   timestamp                   without time zone NOT NULL,
+    create_user_name  character varying(255)      NOT NULL,
+    CONSTRAINT        password_history_pkey PRIMARY KEY (id)
+);
+
+create sequence password_history_seq
+    start with 1
+    increment by 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+alter table ONLY password_history
+    alter COLUMN id SET DEFAULT nextval('password_history_seq'::regclass);
 
 create TABLE user_role
 (

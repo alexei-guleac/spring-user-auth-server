@@ -2,7 +2,7 @@ package com.example.app.controller.app.healthcheck;
 
 import static com.example.app.constants.RequestMappings.HEALTH_CHECK_ROOT;
 
-import com.example.app.api.HealthCheckApi;
+import com.example.app.controller.api.HealthCheckApi;
 import com.example.app.model.data.healthcheck.HealthCheckResponseData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;

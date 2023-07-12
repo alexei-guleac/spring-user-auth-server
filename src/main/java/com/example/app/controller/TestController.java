@@ -1,6 +1,7 @@
 package com.example.app.controller;
 
 import com.example.app.model.User;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+
+  @Operation(summary = "Get context for test purposes")
   @GetMapping("/test")
   @ResponseStatus(HttpStatus.OK)
   public String test() {
@@ -19,6 +22,7 @@ public class TestController {
     return authentication.getName();
   }
 
+  @Operation(summary = "Get current user id for test purposes")
   @GetMapping("/user")
   @ResponseStatus(HttpStatus.OK)
   public String loggedUser(@AuthenticationPrincipal User user) {

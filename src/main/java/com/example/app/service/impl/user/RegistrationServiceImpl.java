@@ -4,17 +4,20 @@ import com.example.app.config.authorization.TokenGenerator;
 import com.example.app.exception.PasswordUpdateException;
 import com.example.app.exception.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
+import com.example.app.model.PasswordHistory;
 import com.example.app.model.User;
 import com.example.app.model.auth.TokenInfo;
 import com.example.app.model.auth.UpdatePasswordData;
 import com.example.app.model.auth.UserData;
 import com.example.app.model.exception.ValidationExceptionData;
 import com.example.app.repository.UserRepository;
+import com.example.app.service.PasswordHistoryService;
 import com.example.app.service.RegistrationService;
 import com.example.app.service.UserSecurityContextService;
 import java.util.Collections;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class RegistrationServiceImpl implements RegistrationService {
 
@@ -34,6 +38,8 @@ public class RegistrationServiceImpl implements RegistrationService {
   private final UserMapper userMapper;
 
   private final UserRepository userRepository;
+
+  private final PasswordHistoryService passwordHistoryService;
 
   private final TokenGenerator tokenGenerator;
 
@@ -68,7 +74,14 @@ public class RegistrationServiceImpl implements RegistrationService {
           .errorMessage("Wrong password").build());
     }
 
-    user.setPassword(passwordEncoder.encode(newPassword));
+    final String encode = passwordEncoder.encode(newPassword);
+    user.setPassword(encode);
+
+    passwordHistoryService.saveNewRecord(
+        PasswordHistory.builder().userId(currentUserId)
+            .createUserName(currentUserId.toString())
+            .password(encode)
+            .build());
 
     return updatePasswordData;
   }

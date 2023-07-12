@@ -1,4 +1,4 @@
-package com.example.app.api;
+package com.example.app.controller.api;
 
 
 import static com.example.app.constants.ApiDescriptionConstants.API_RESPONSE_INTERNAL_SERVER_ERROR;
