@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - includeAll:
+      path: liquibase/init/dbschema
+  #  - includeAll:
+  #      path: liquibase/init/changes
+  #  - includeAll:
+  #      path: liquibase/data/common
+  #  - includeAll:
+  #      path: liquibase/data/test
+  - includeAll:
+      path: liquibase/init/index

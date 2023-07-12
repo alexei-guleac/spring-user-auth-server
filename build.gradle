@@ -1,0 +1,113 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
+    id 'com.github.ben-manes.versions' version "$githubBenManesVersion"
+    id 'org.sonarqube' version "$sonarQubeVersion"
+    id "com.github.spotbugs" version "$googleSpotBugsVersion"
+}
+
+group = 'com.example'
+version = '0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVersion"
+    implementation "io.swagger:swagger-models:$swaggerVersion"
+    implementation "io.swagger:swagger-annotations:$swaggerVersion"
+    implementation "io.springfox:springfox-bean-validators:$swaggerValidatorsVersion"
+
+    implementation 'ch.qos.logback:logback-core'
+    testImplementation 'ch.qos.logback:logback-classic'
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+
+    implementation "org.mapstruct:mapstruct:$mapStructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+    implementation "org.apache.commons:commons-vfs2:$apacheCommonsVsf2"
+    implementation "org.apache.commons:commons-lang3:$apacheCommonsLang3"
+    implementation "org.apache.commons:commons-text:$apacheCommonsText"
+    implementation "commons-io:commons-io:$apacheCommonsIo"
+    implementation "commons-validator:commons-validator:$apacheCommonsValidator"
+
+    "com.github.spotbugs.snom:spotbugs-gradle-plugin:$googleSpotBugsVersion"
+
+    implementation 'org.liquibase:liquibase-core'
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    testImplementation "org.testcontainers:testcontainers:$testContainersVersion"
+    testImplementation "org.testcontainers:junit-jupiter:$testContainersVersion"
+    testImplementation "org.testcontainers:postgresql:$testContainersVersion"
+
+
+    implementation "com.tngtech.archunit:archunit:$arcUnitVersion"
+    testImplementation "com.tngtech.archunit:archunit-junit5:$arcUnitVersion"
+    testImplementation "com.tngtech.archunit:archunit-junit5-api:$arcUnitVersion"
+    testImplementation "com.tngtech.archunit:archunit-junit5-engine:$arcUnitVersion"
+
+}
+
+apply plugin: "org.sonarqube"
+apply plugin: "com.github.spotbugs"
+
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "sqp_25452d6f8276c044d38f847b257c26beecaa6970"
+        property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
+spotbugs {
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+    effort = 'default'
+    reportLevel = 'default'
+    maxHeapSize = '1g'
+    extraArgs = [ '-nested:false' ]
+    jvmArgs = [ '-Duser.language=ja' ]
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,50 @@
+spring:
+  cloud:
+    config:
+      override-system-properties: false
+
+  jpa:
+    show-sql: false
+    database: POSTGRESQL
+    generate-ddl: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+        generate_statistics: false
+      format_sql: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: 'validate'
+    database-platform: postgresql
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 300
+      idle-timeout: 30000
+      max-lifetime: 60000
+      connection-timeout: 10000
+      pool-name: db-connection-pool
+      connection-test-query: SELECT 1
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+  sql:
+    init:
+      platform: postgres
+      mode: never
+      data-locations: classpath*:data/init.sql
+
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/${spring.profiles.active}/db/changelog/db.changelog-master.yaml
+
+access_token_private_key_path: "access-refresh-token-keys/access-token-private.key"
+access_token_public_key_path: "access-refresh-token-keys/access-token-public.key"
+refresh_token_private_key_path: "access-refresh-token-keys/refresh-token-private.key"
+refresh_token_public_key_path: "access-refresh-token-keys/refresh-token-public.key"

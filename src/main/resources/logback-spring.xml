@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="15 seconds">
+  <!--  <configuration scan="true" scanPeriod="15 seconds" debug="true">-->
+
+  <appender class="RollingFileAppender" name="FILE">
+    <encoder>
+      <pattern>${FILE_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_DIR}/${LOG_FILE_APP}.log</file>
+    <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>${LOG_DIR}/${LOG_FILE_APP}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+      <!-- or whenever the file size reaches -->
+      <maxFileSize>${LOG_FILE_MAX_SIZE}</maxFileSize>
+      <!-- keep days' worth of history -->
+      <maxHistory>${LOG_FILE_MAX_HIST}</maxHistory>
+    </rollingPolicy>
+  </appender>
+  <appender class="RollingFileAppender" name="HIBERNATE">
+    <encoder>
+      <pattern>${FILE_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_DIR}/${LOG_FILE_H}.log</file>
+    <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIR}/${LOG_FILE_H}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+      <!-- or whenever the file size reaches -->
+      <maxFileSize>${LOG_FILE_MAX_SIZE}</maxFileSize>
+      <!-- keep days' worth of history -->
+      <maxHistory>${LOG_FILE_MAX_HIST}</maxHistory>
+    </rollingPolicy>
+  </appender>
+  <appender class="ConsoleAppender" name="CONSOLE">
+    <encoder>
+      <pattern>${CONSOLE_PATTERN}</pattern>
+    </encoder>
+  </appender>
+  <appender class="RollingFileAppender" name="ERRLVL">
+    <encoder>
+      <pattern>${FILE_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_DIR_DEBUG}/${LOG_FILE_EX}.log</file>
+    <filter class="LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+    <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIR_DEBUG}/${LOG_FILE_EX}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+      <!-- or whenever the file size reaches -->
+      <maxFileSize>${LOG_FILE_MAX_SIZE}</maxFileSize>
+      <!-- keep days' worth of history -->
+      <maxHistory>${LOG_FILE_MAX_HIST}</maxHistory>
+    </rollingPolicy>
+  </appender>
+  <appender class="RollingFileAppender" name="WARNLVL">
+    <encoder>
+      <pattern>${FILE_PATTERN}</pattern>
+    </encoder>
+    <file>${LOG_DIR_DEBUG}/${LOG_FILE_WARN}.log</file>
+    <filter class="LevelFilter">
+      <level>WARN</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+    <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIR_DEBUG}/${LOG_FILE_WARN}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+      <!-- or whenever the file size reaches -->
+      <maxFileSize>${LOG_FILE_MAX_SIZE}</maxFileSize>
+      <!-- keep days' worth of history -->
+      <maxHistory>${LOG_FILE_MAX_HIST}</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+
+  <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+  <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"/>
+  <import class="ch.qos.logback.classic.filter.LevelFilter"/>
+  <logger additivity="false" level="INFO" name="org.hibernate">
+    <appender-ref ref="HIBERNATE"/>
+  </logger>
+
+  <property name="LOG_FILE_APP" value="app"/>
+
+  <!--    %d{yyyy-MM-dd HH:mm:ss.SSS}{faint} %5p ${PID:- }{magenta} -&#45;&#45;{faint} [%15.15t]{faint} %-40.40logger{39}{cyan} :{faint} %msg%n%rEx{-->
+
+  <property name="LOG_FILE_H" value="hibernate"/>
+
+  <property name="LOG_FILE_EX" value="exceptions"/>
+
+  <property name="LOG_FILE_WARN" value="warns"/>
+
+  <property name="LOG_FILE_USER" value="user"/>
+
+  <property name="FILE_PATTERN"
+    value="%date{ISO8601} | %-5level | %-30.30logger{30} | %thread | %msg%n%rEx{full,
+            java.lang.reflect.Method,
+            javax,
+            java.util.concurrent,
+            java.lang.Thread,
+            org.apache.catalina,
+            org.apache.tomcat,
+            org.apache.coyote,
+            org.springframework.aop,
+            org.springframework.boot.actuate,
+            org.springframework.security,
+            org.springframework.transaction,
+            org.springframework.web,
+            sun.reflect,
+            net.sf.cglib,
+            ByCGLIB
+      }"
+  />
+
+  <property name="CONSOLE_PATTERN"
+    value="%date{ISO8601} | %highlight(%-5level) | %cyan(%thread) | %boldYellow(%-30.30logger{30}) | %msg%n%rEx{full,
+            java.lang.reflect.Method,
+            javax,
+            java.util.concurrent,
+            java.lang.Thread,
+            org.apache.catalina,
+            org.apache.tomcat,
+            org.apache.coyote,
+            org.springframework.aop,
+            org.springframework.boot.actuate,
+            org.springframework.security,
+            org.springframework.transaction,
+            org.springframework.web,
+            sun.reflect,
+            net.sf.cglib,
+            ByCGLIB
+      }"
+  />
+
+  <springProfile name="dev | test | local | prod">
+    <property name="LOG_DIR" value="logs"/>
+    <property name="LOG_DIR_DEBUG" value="logs/debug"/>
+    <property name="LOG_DIR_USER" value="logs/users"/>
+    <property name="LOG_DIR_REQ" value="logs/requests"/>
+    <property name="LOG_FILE_MAX_SIZE" value="35MB"/>
+    <property name="LOG_FILE_MAX_HIST" value="7"/>
+  </springProfile>
+
+  <!--    Loggers setup according to Spring Profile-->
+  <springProfile name="test | prod">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+
+      <appender-ref ref="ERRLVL"/>
+      <appender-ref ref="WARNLVL"/>
+      <!--      to enable this in production -->
+      <!--      <appender-ref ref="EMAIL"/>-->
+    </root>
+  </springProfile>
+
+  <springProfile name="dev | local">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+
+      <appender-ref ref="ERRLVL"/>
+      <appender-ref ref="WARNLVL"/>
+    </root>
+  </springProfile>
+
+</configuration>

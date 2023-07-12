@@ -1,0 +1,87 @@
+server:
+  servlet:
+    context-path: "/api"
+    session:
+      timeout: 120
+      persistent: false
+      cookie:
+        secure: true
+        http-only: true
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  profiles:
+    active:
+      - test
+  jpa:
+    show-sql: true
+
+
+  liquibase:
+    enabled: false
+    drop-first: false
+    contexts: ${spring.profiles.active}
+
+  application:
+    name: ${info.app}
+  security:
+    filter:
+      order: 20
+    enabled: true
+    user:
+      roles:
+        - sense_it_admin
+        - MONITORING
+
+  main:
+    allow-bean-definition-overriding: true
+
+access-token:
+  private: ${access_token_private_key_path}
+  public: ${access_token_public_key_path}
+refresh-token:
+  private: ${refresh_token_private_key_path}
+  public: ${refresh_token_public_key_path}
+
+
+info:
+  app: app-service
+  release: 0.0.1
+  api-docs-url-dev: http://localhost:8181/api
+  api-docs-url-prod: https://app.com/app/api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+
+swagger:
+  enabled: true
+
+# /api-docs endpoint custom path
+springdoc:
+  api-docs.path: /v3/api-docs/app
+
+sonar.exclusions: "**/src/test/ **"
+
+logging:
+  group:
+    swagger: springfox.documentation.spring.web.readers.operation, springfox.documentation.spring.web.scanners
+    apache-http-client-impl-auth: org.apache.http.impl.client.TargetAuthenticationStrategy
+  level:
+    swagger: WARN
+    apache-http-client-impl-auth: ERROR
+    org:
+      hibernate:
+        SQL: OFF
+#        for json debug delete
+#      springframework:
+#        web: DEBUG
+#        for security debug delete
+#    root: DEBUG
+#    javax.management: ERROR
+#    org.springframework.security.web.FilterChainProxy: DEBUG
