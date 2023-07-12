@@ -5,7 +5,6 @@ import static com.example.app.constants.RequestMappings.HEALTH_CHECK_ROOT;
 import com.example.app.api.HealthCheckApi;
 import com.example.app.model.data.healthcheck.HealthCheckResponseData;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,11 +18,10 @@ public class HealthCheckController implements HealthCheckApi {
   private String appName;
 
   @Override
-  public ResponseEntity<HealthCheckResponseData> healthCheck() {
-    return ResponseEntity
-        .ok(HealthCheckResponseData.builder()
-            .name(appName)
-            .status(STATUS)
-            .build());
+  public HealthCheckResponseData healthCheck() {
+    return HealthCheckResponseData.builder()
+        .name(appName)
+        .status(STATUS)
+        .build();
   }
 }

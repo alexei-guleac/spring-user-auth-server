@@ -3,7 +3,7 @@ package com.example.app.controller;
 
 import static com.example.app.constants.RequestMappings.USERS_ROOT;
 
-import com.example.app.controller.api.UserApi;
+import com.example.app.controller.api.UserDataApi;
 import com.example.app.mapper.UserMapper;
 import com.example.app.model.User;
 import com.example.app.model.auth.UserData;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping(USERS_ROOT)
-public class UserController implements UserApi {
+public class UserDataController implements UserDataApi {
 
   private final UserDetailsService userDetailsService;
 

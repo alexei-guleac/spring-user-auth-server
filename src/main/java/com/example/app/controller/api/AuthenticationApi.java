@@ -21,9 +21,9 @@ import com.example.app.model.auth.LoginData;
 import com.example.app.model.auth.TokenInfo;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +35,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
     "User - authentication controller",})
 public interface AuthenticationApi {
 
-  @ApiOperation(value = "Login user and get authentication token",
-      nickname = "loginUser", tags = {})
+  @Operation(summary = "Login user and get authentication token", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -50,8 +49,7 @@ public interface AuthenticationApi {
   @ResponseStatus(HttpStatus.OK)
   TokenInfo loginUser(@Valid @RequestBody LoginData loginData);
 
-  @ApiOperation(value = "Logout current user context",
-      nickname = "logout", tags = {})
+  @Operation(summary = "Logout current user context", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -65,8 +63,7 @@ public interface AuthenticationApi {
   @ResponseStatus(HttpStatus.OK)
   void logout();
 
-  @ApiOperation(value = "Get authentication refresh token",
-      nickname = "getToken", tags = {})
+  @Operation(summary = "Get authentication refresh token", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),

@@ -11,22 +11,23 @@ import static com.example.app.constants.ApiDescriptionConstants.UNAVAILABLE;
 import com.example.app.model.data.healthcheck.HealthCheckResponseData;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Api(value = "HealthCheckApi", description = "The Health check API")
 public interface HealthCheckApi {
 
-  @ApiOperation(value = "Check APP health status", nickname = "healthCheck",
-      response = HealthCheckResponseData.class, tags = {})
+  @Operation(summary = "Check APP health status", tags = {})
   @ApiResponses(value = {
-      @ApiResponse(code = OK, message = API_RESPONSE_OK),
+      @ApiResponse(code = OK, message = API_RESPONSE_OK, response = HealthCheckResponseData.class),
       @ApiResponse(code = INTERNAL_SERVER_ERROR, message = API_RESPONSE_INTERNAL_SERVER_ERROR, response = ExceptionDetails.class),
       @ApiResponse(code = UNAVAILABLE, message = API_RESPONSE_UNAVAILABLE)})
   @GetMapping
-  ResponseEntity<HealthCheckResponseData> healthCheck();
+  @ResponseStatus(HttpStatus.OK)
+  HealthCheckResponseData healthCheck();
 
 }

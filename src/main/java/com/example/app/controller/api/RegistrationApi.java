@@ -22,9 +22,9 @@ import com.example.app.model.auth.UpdatePasswordData;
 import com.example.app.model.auth.UserData;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +36,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
     "User - registration controller",})
 public interface RegistrationApi {
 
-  @ApiOperation(value = "Register user and get authentication token",
-      nickname = "registerUser", tags = {})
+  @Operation(summary = "Register user and get authentication token", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = TokenInfo.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -51,8 +50,7 @@ public interface RegistrationApi {
   @ResponseStatus(HttpStatus.CREATED)
   TokenInfo registerUser(@Valid @RequestBody UserData signUpData);
 
-  @ApiOperation(value = "Update password",
-      nickname = "updatePassword", tags = {})
+  @Operation(summary = "Update password", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UpdatePasswordData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),

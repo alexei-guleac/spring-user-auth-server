@@ -21,9 +21,9 @@ import com.example.app.model.User;
 import com.example.app.model.auth.UserData;
 import com.example.app.model.exception.ExceptionDetails;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -38,10 +38,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Api(value = "User", tags = {
     "User - get controller",})
-public interface UserApi {
+public interface UserDataApi {
 
-  @ApiOperation(value = "Get user by id",
-      nickname = "user", tags = {})
+  @Operation(summary = "Get user by id", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -56,8 +55,7 @@ public interface UserApi {
   @ResponseStatus(HttpStatus.OK)
   UserData user(@AuthenticationPrincipal User user, @PathVariable UUID id);
 
-  @ApiOperation(value = "Get users list by id",
-      nickname = "getUsersListByIds", tags = {})
+  @Operation(summary = "Get users list by id", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -71,8 +69,7 @@ public interface UserApi {
   @ResponseStatus(HttpStatus.OK)
   Set<UserData> getUserListByIds(@Valid @RequestBody List<UUID> userIds);
 
-  @ApiOperation(value = "Get all users list",
-      nickname = "findAllUsers", tags = {})
+  @Operation(summary = "Get all users list", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -86,8 +83,7 @@ public interface UserApi {
   @ResponseStatus(HttpStatus.OK)
   Set<UserData> getAllUsers(@PathVariable int pageNumber, @PathVariable int pageSize);
 
-  @ApiOperation(value = "Search users by email",
-      nickname = "searchByEmail", tags = {})
+  @Operation(summary = "Search users by email", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),
@@ -102,8 +98,7 @@ public interface UserApi {
   List<UserData> searchByEmail(@PathVariable String email, @PathVariable int pageNumber,
       @PathVariable int pageSize);
 
-  @ApiOperation(value = "Get user by email",
-      nickname = "getByEmail", tags = {})
+  @Operation(summary = "Get user by email", tags = {})
   @ApiResponses(value = {
       @ApiResponse(code = OK, message = API_RESPONSE_OK, response = UserData.class),
       @ApiResponse(code = BAD_REQUEST, message = API_RESPONSE_BAD_REQUEST, response = ExceptionDetails.class),

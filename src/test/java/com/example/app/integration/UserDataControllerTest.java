@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {Application.class,
     TestDataSourceConfiguration.class,})
-class UserControllerTest extends PostgresTestContainer {
+class UserDataControllerTest extends PostgresTestContainer {
 
   @Autowired
   private TestRestTemplate template;
