@@ -51,7 +51,7 @@ public class TokenGenerator {
     JwtClaimsSet claimsSet = JwtClaimsSet.builder()
         .issuer("app")
         .issuedAt(now)
-        .expiresAt(now.plus(5, ChronoUnit.MINUTES))
+        .expiresAt(now.plus(60, ChronoUnit.MINUTES))
         .subject(usrDetails.getId().toString())
         .claim("scope", scope)
         .claim("dsf", "dfgfg")

@@ -1,5 +1,6 @@
 package com.example.app.exception.handlers;
 
+import com.example.app.exception.PasswordUpdateException;
 import com.example.app.exception.UserNotFoundException;
 import com.example.app.model.exception.ErrorCode;
 import com.example.app.model.exception.ValidationExceptionData;
@@ -36,6 +37,16 @@ public class UserDetailErrorHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = {UserNotFoundException.class})
   protected ResponseEntity<Object> validationUserNotFound(
       UserNotFoundException ex, WebRequest request) {
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionHandlerMapper
+        .getCustomExceptionDetails(ex,
+            exceptionHandlerMapper.getContextPath(request), HttpStatus.NOT_FOUND,
+            ErrorCode.NOT_FOUND, ex.getValidationExceptionData()));
+  }
+
+  @ExceptionHandler(value = {PasswordUpdateException.class})
+  protected ResponseEntity<Object> processPasswordUpdate(
+      PasswordUpdateException ex, WebRequest request) {
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionHandlerMapper
         .getCustomExceptionDetails(ex,

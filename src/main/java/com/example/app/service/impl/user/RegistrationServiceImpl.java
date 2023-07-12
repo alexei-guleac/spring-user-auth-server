@@ -63,7 +63,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     final String oldPassword = updatePasswordData.getOldPassword();
     final String newPassword = updatePasswordData.getNewPassword();
 
-    if (!passwordEncoder.encode(oldPassword).equals(user.getPassword())) {
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
       throw new PasswordUpdateException(ValidationExceptionData.builder()
           .errorMessage("Wrong password").build());
     }
