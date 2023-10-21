@@ -15,7 +15,16 @@ public class RequestMappings {
 
   public static final String ALL_MATCHING = "/**";
 
-  public static final String[] SERVICE_ENDPOINTS = {"/swagger-ui/**",
+  public static final String[] SERVICE_ENDPOINTS = {
+
+      "/swagger-ui.html", "/webjars/**", "/swagger-resources", "/swagger-resources/**",
+      "/v2/api-docs", "/configuration/ui", "/configuration/security", "/swagger-ui/**",
+      "/v3/api-docs/**",
+
+      "/swagger-ui/**",
+      "/swagger-resources/**",
+      "/swagger-ui.html",
+      "/v2/api-docs/**",
       "/v3/api-docs/**",
       "/h2-console/**",
       "/actuator/**"};
